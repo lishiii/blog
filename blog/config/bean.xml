@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- 引入外部文件jdbc.properties -->
+	<context:property-placeholder location="classpath:jdbc.properties" />
+	<!-- c3p0连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driver}"></property>
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="user" value="${jdbc.user}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+
+	<!-- hibernate的配置相关信息 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- 注入连接池 dataSource -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 配置hibernate基本信息 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.connnection.autocommit">false</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+			</props>
+		</property>
+		<!-- 配置相关hibernate映射文件 -->
+		<property name="mappingResources">
+			<list>
+				<value>cn/ink/blog/contents/po/Contents.hbm.xml</value>
+				<value>cn/ink/blog/photos/po/Photos.hbm.xml</value>
+				<value>cn/ink/blog/services/po/Services.hbm.xml</value>
+				<value>cn/ink/blog/team/po/Team.hbm.xml</value>
+				<value>cn/ink/blog/products/po/Products.hbm.xml</value>
+				<value>cn/ink/blog/journal/po/Journal.hbm.xml</value>
+				<value>cn/ink/blog/comment/po/Contents.hbm.xml</value>
+				<!-- <value>....</value> -->
+			</list>
+		</property>
+	</bean>
+
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<!--注入sessionFactory -->
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- 开启事务注解 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- Action配置============================================================================================Action配置 -->
+	<bean id="indexAction" class="cn.ink.blog.index.action.IndexAction" scope="prototype">
+		<property name="contentsService" ref="contentsService"></property>
+		<property name="photosService" ref="photosService"></property>
+		<property name="servicesService" ref="servicesService"></property>
+		<property name="teamService" ref="teamService"></property>
+		<property name="productsService" ref="productsService"></property>
+		<property name="journalService" ref="journalService"></property>
+	</bean>
+	<bean id="journalAction" class="cn.ink.blog.journal.action.JournalAction">
+		<property name="journalService" ref="journalService"></property>
+		<property name="journalService" ref="journalService"></property>
+	</bean>
+
+	<!-- Service配置==========================================================================================Service配置 -->
+	<bean id="contentsService" class="cn.ink.blog.contents.service.ContentsService" scope="prototype">
+		<property name="contentsDao" ref="contentsDao"></property>
+	</bean>
+	<bean id="photosService" class="cn.ink.blog.photos.service.PhotosService" scope="prototype">
+		<property name="photosDao" ref="photosDao"></property>
+	</bean>
+	<bean id="servicesService" class="cn.ink.blog.services.service.ServicesService" scope="prototype">
+		<property name="servicesDao" ref="servicesDao"></property>
+	</bean>
+	<bean id="teamService" class="cn.ink.blog.team.service.TeamService" scope="prototype">
+		<property name="teamDao" ref="teamDao"></property>
+	</bean>
+	<bean id="productsService" class="cn.ink.blog.products.service.ProductsService" scope="prototype">
+		<property name="productsDao" ref="productsDao"></property>
+	</bean>
+	<bean id="journalService" class="cn.ink.blog.journal.service.JournalService" scope="prototype">
+		<property name="journalDao" ref="journalDao"></property>
+	</bean>
+	<bean id="journalService" class="cn.ink.blog.journal.service.JournalService" scope="prototype">
+		<property name="commentDao" ref="commentDao"></property>
+	</bean>
+	
+	
+	<!-- Dao配置==================================================================================================Dao配置 -->
+	<bean id="contentsDao" class="cn.ink.blog.contents.dao.ContentsDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="photosDao" class="cn.ink.blog.photos.dao.PhotosDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="servicesDao" class="cn.ink.blog.services.dao.ServicesDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="teamDao" class="cn.ink.blog.team.dao.TeamDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="productsDao" class="cn.ink.blog.products.dao.ProductsDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="journalDao" class="cn.ink.blog.journal.dao.JournalDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="commentDao" class="cn.ink.blog.journal.dao.JournalDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+</beans>

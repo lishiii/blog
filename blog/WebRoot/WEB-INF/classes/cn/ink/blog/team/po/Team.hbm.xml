@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="cn.ink.blog.team.po.Team" table="team">
+		<id name="tid">
+			<generator class="native"></generator>
+		</id>
+		<property name="picSrc"></property>
+		<property name="name"></property>
+		<property name="occupation"></property>
+		<property name="introdution1"></property>
+		<property name="introdution2"></property>
+	</class>
+
+</hibernate-mapping>

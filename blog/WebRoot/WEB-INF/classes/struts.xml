@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<package name="blog" extends="struts-default" namespace="/">
+		<action name="index" class="indexAction">
+			<result name="index">/WEB-INF/index.jsp</result>
+		</action>
+		
+		<action name="journal_*" class="journalAction" method="{1}">
+			<result name="blogsingle">/WEB-INF/blogsingle.jsp</result>
+			<result name="bloginner">/WEB-INF/bloginner.jsp</result>
+		</action>
+	</package>
+</struts>

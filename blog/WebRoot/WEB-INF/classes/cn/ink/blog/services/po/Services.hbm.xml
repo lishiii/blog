@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="cn.ink.blog.services.po.Services" table="services">
+		<id name="sid">
+			<generator class="native"></generator>
+		</id>
+		<property name="picUrl"></property>
+		<property name="title"></property>
+		<property name="text"></property>
+		<property name="hrefName"></property>
+		<property name="hrefAdd"></property>
+	</class>
+
+</hibernate-mapping>

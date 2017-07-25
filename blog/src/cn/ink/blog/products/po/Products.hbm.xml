@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="cn.ink.blog.products.po.Products" table="products">
+		<id name="prid">
+			<generator class="native"></generator>
+		</id>
+		<property name="name"></property>
+		<property name="price"></property>
+		<property name="type"></property>
+		<property name="weight"></property>
+		<property name="address"></property>
+		<property name="property1"></property>
+		<property name="property2"></property>
+		<property name="property3"></property>
+	</class>
+
+</hibernate-mapping>
